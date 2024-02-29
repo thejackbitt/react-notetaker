@@ -3,16 +3,28 @@
 
 export default function AddNote(props){
 
-  function handleInputChange(e){
+  async function handleInputChange(e){
     props.setNewNote({...props.newNote, [e.target.name]: e.target.value })
   }
 
-  function addNewNote(e){
+  async function fetchCall(data) {
+      await fetch("/api/note", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+    }
+
+  async function addNewNote(e){
     e.preventDefault()
     // add the current note to the notes array
     props.setNotes([...props.notes, props.newNote])
+    fetchCall(props.newNote);
     // revert form back to its original state
     props.setNewNote(props.defaultForm)
+    
   }
 
   return (

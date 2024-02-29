@@ -25,7 +25,7 @@ export default function ListNotes(props){
             <tr key={note.title}>
               <td>
                 <span>
-                  <a href={`/note/${note?._id}`}>
+                  <a href={`/api/note/${note?._id}`}>
                     { note.title }
                   </a>
                 </span>

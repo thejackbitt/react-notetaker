@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import notesDb from "../notes.json"
+// import notesDb from "../notes.json"
 
 export function NoteItem(){
 
@@ -15,9 +15,13 @@ export default function Note(){
 
   // In the JSON file, find the note which has an _id equal to the 
   // id in the URL
-  function getNote(){
-    const foundNote = notesDb.find( note => note._id === params.id)
-    console.log(foundNote)
+  async function getNote(){
+    const foundNote = await fetch(`/api/note/${params.id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
     setNote(foundNote)
   }
   
