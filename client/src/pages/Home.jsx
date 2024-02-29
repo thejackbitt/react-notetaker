@@ -11,9 +11,9 @@ export default function Home() {
 
   const defaultForm = { title: "", body: "", priority: "0" }
 
-  const [ notes, setNotes ] = useState(() => getNote())
+  const [ notes, setNotes ] = useState([])
   const [ newNote, setNewNote ] = useState(defaultForm)
-  const [ currentNote, setCurrentNote ] = useState(null)
+  const [ currentNote, setCurrentNote ] = useState([])
 
   async function getNote(){
     const result = await fetch(`/api/note`, {
@@ -23,7 +23,7 @@ export default function Home() {
       }
     })
     const data = await result.json()
-    const newData = data.map( item => ({...item, priority: item.priority.toString() }) )
+    const newData = data.payload.map( item => ({...item, priority: item.priority?.toString() }) )
     setNotes(newData)
   }
 
@@ -38,8 +38,8 @@ export default function Home() {
   },[currentNote])
 
   useEffect(() => {
-    console.log(notes)
-  },[notes])
+    getNote()
+  },[])
 
 
   return (

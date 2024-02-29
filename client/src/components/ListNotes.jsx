@@ -8,6 +8,17 @@ export default function ListNotes(props){
     if( value === "3" ) return "LHighow"
   }
 
+  async function loadNote(route){
+    const foundNote = await fetch(`${route}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    console.log(foundNote);
+    props.setCurrentNote(foundNote)
+  }
+
 
   return (
     <>
@@ -22,13 +33,9 @@ export default function ListNotes(props){
 
         <tbody>
           { props.notes.map( (note) => (
-            <tr key={note.title}>
+            <tr key={note._id}>
               <td>
-                <span>
-                  <a href={`/api/note/${note?._id}`}>
-                    { note.title }
-                  </a>
-                </span>
+                <a href={`/note/${note?._id}`}>{note.title}</a>
               </td>
               <td>{ note.body }</td>
               <td>
